@@ -1,0 +1,48 @@
+{
+  "name": "AIERP-SERVER",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "config": {
+    "webAppGitUrl": "https://github.com/rehanahmad1974/AIERP.git"
+  },
+  "scripts": {
+    "init:env": "init-dev-env generate-dot-env example.env -f",
+    "postinstall": "npm-recursive-install --skip-root",
+    "build": "npm run build --prefix ./server && npm run build --prefix ./web-app -- --configuration=aierp-server",
+    "test": "npm test --prefix ./server && npm test --prefix ./web-app -- --watch=false",
+    "prestart": "npm run build && docker-compose build",
+    "start": "docker-compose up",
+    "stop": "docker-compose down",
+    "clean": "docker-compose rm",
+    "clean:all": "docker system prune --volumes",
+    "start:backend": "docker-compose -f docker-compose.backend.yml up --build",
+    "start:database": "docker-compose -f docker-compose.database.yml up --build",
+    "publish:aws": "cross-conf-env ecs-cli compose --file docker-compose.aws.yml -p $npm_package_name -c $npm_package_config_awsEcsCluster -r $npm_package_config_awsRegion create",
+    "start:docker:database": "docker run --env-file .env -d -p '27017:27017' -v '/tmp/aierp-db:/data/db' duluca/minimal-mongo",
+    "rimraf:node_modules": "rimraf node_modules && rimraf server/node_modules && rimraf web-app/node_modules",
+    "webapp:clean": "cross-conf-env rimraf web-app && git rm -r --cached web-app",
+    "webapp:init": "cross-conf-env git submodule add $npm_package_config_webAppGitUrl web-app",
+    "postwebapp:init": "git submodule status web-app",
+    "modules:init": "git submodule update --init --recursive",
+    "modules:update": "git submodule update --recursive --remote",
+    "aws:login:win": "cross-conf-env aws ecr get-login --no-include-email --region $npm_package_config_awsRegion > dockerLogin.cmd && call dockerLogin.cmd && del dockerLogin.cmd",
+    "aws:login:mac": "eval $(aws ecr get-login --no-include-email --region $npm_package_config_awsRegion)",
+    "aws:login": "run-p -cs aws:login:win aws:login:mac",
+    "aws:deploy": "cross-conf-env docker run --env-file ./.env silintl/ecs-deploy -c $npm_package_config_awsEcsCluster -n $npm_package_config_awsService -i $npm_package_config_imageRepo:latest -r $npm_package_config_awsRegion --timeout 1000",
+    "aws:release": "run-s -cs aws:login docker:publish aws:deploy",
+    "aws:publish:compose": "cross-conf-env ecs-cli compose --file docker-compose.aws.yml -p $npm_package_name -c $npm_package_config_awsEcsCluster -r $npm_package_config_awsRegion create"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-conf-env": "^1.2.1",
+    "dev-norms": "^1.7.1",
+    "init-dev-env": "^1.0.0",
+    "npm-run-all": "^4.1.5",
+    "recursive-install": "^1.4.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.2.4"
+  }
+}
