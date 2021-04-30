@@ -107,6 +107,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - setup_remote_docker
+          version: 20.10.2
       - attach_workspace:
           at: /tmp/workspace
       - checkout:
