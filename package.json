@@ -7,6 +7,8 @@
     "webAppGitUrl": "https://github.com/rehanahmad1974/AIERP.git"
   },
   "scripts": {
+    "style:fix": "import-sort --write \"**/{src,tests,e2e}/**/*.ts\" && prettier --write \"**/{src,tests,e2e}/**/*.{*css,ts}\" && js-beautify \"**/src/**/*.html\"",
+    "style": "import-sort -l \"**/{src,tests,e2e}/**/*.ts\" && prettier --check \"**/{src,tests,e2e}/**/*.{*css,ts}\"",
     "init:env": "init-dev-env generate-dot-env example.env -f && init-dev-env generate-dot-env server-example.env --source=. --target=server -f",
     "postinstall": "npm-recursive-install --skip-root",
     "build": "npm run build --prefix ./server && npm run build --prefix ./web-app -- --configuration=aierp-server",
