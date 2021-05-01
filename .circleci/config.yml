@@ -87,7 +87,7 @@ jobs:
 
       - run:
           name: Tar & Gzip compiled app
-          command: tar zcf dist.tar.gz dist/aierp
+          command: tar zcf dist.tar.gz dist/AIERP
       - store_artifacts:
           path: dist.tar.gz
 
@@ -96,11 +96,11 @@ jobs:
           command: |
             set -exu
             mkdir -p /tmp/workspace/dist
-            mv dist/aierp /tmp/workspace/dist/
+            mv dist/AIERP /tmp/workspace/dist/
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - dist/aierp
+            - dist/AIERP
   test_compose:
     docker:
       - image: circleci/node:lts-browsers
