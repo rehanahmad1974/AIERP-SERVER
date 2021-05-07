@@ -33,12 +33,25 @@ export function createJwt(user: IUser): Promise<string> {
         subject: user._id.toHexString(),
         expiresIn: '1d',
       },
-      (err: Error, encoded: string) => {
+      (err: any, token: any) => {
+        if (err) {
+          return reject(err)
+        }
+        resolve(token)
+      }
+      /*
+      function (err: Error, encoded: string) {
         if (err) {
           reject(err.message)
         }
         resolve(encoded)
-      }
+      }*/
+      /*(err: Error, encoded: string) => {
+        if (err) {
+          reject(err.message)
+        }
+        resolve(encoded)
+      }*/
     )
   })
 }

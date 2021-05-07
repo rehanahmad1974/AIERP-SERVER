@@ -18,14 +18,14 @@ export interface IName {
 }
 
 export interface IUser extends IDocument {
-  email: string
-  name: IName
-  picture: string
-  role: Role
-  userStatus: boolean
-  dateOfBirth: Date
-  level: number
-  address: {
+  email?: string
+  name?: IName
+  picture?: string
+  role?: Role
+  userStatus?: boolean
+  dateOfBirth?: Date
+  level?: number
+  address?: {
     line1: string
     line2?: string
     city: string

@@ -91,10 +91,10 @@ router.get(
   authenticate({ requiredRole: Role.Manager }),
   async (req: Request, res: Response) => {
     const query: Partial<IQueryParameters> = {
-      filter: req.query.filter,
-      limit: req.query.limit,
-      skip: req.query.skip,
-      sortKeyOrList: req.query.sortKey,
+      filter: req.query.filter as string,
+      limit: req.query.limit as any,
+      skip: req.query.skip as any,
+      sortKeyOrList: req.query.sortKey as string,
       projectionKeyOrList: ['email', 'role', '_id', 'name'],
     }
 
