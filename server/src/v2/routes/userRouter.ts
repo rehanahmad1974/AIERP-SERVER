@@ -212,7 +212,7 @@ router.put(
   }),
   async (req: Request, res: Response) => {
     const userData = req.body as User
-    delete userData._id
+    userData._id = null as any
     await UserCollection.findOneAndUpdate(
       { _id: new ObjectID(req.params.userId) },
       {

@@ -7,6 +7,9 @@ import * as config from './config'
 import { UserCollection } from './models/user'
 import { initializeDemoUser } from './services/userService'
 
+//import { mongo } from 'mongoose'
+
+
 export let Instance: http.Server
 
 async function start() {
@@ -22,7 +25,7 @@ async function start() {
   }
 
   try {
-    await document.connect(config.MongoUri, config.IsProd)
+    await document.connect( config.MongoUri, config.IsProd )
     console.log('Connected to database!')
   } catch (ex) {
     console.log(`Couldn't connect to a database: ${ex}`)
