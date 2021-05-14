@@ -1,7 +1,7 @@
 {
   "name": "aierp-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Server for AIERP web application",
   "main": "index.js",
   "config": {
     "webAppGitUrl": "https://github.com/rehanahmad1974/AIERP.git"
