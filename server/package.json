@@ -1,7 +1,7 @@
 {
   "name": "aierp-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "dependency problems resolved",
   "main": "index.js",
   "scripts": {
     "pretest": "npm run build && npm run build:test",
